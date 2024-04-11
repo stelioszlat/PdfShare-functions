@@ -41,5 +41,35 @@ functions:
       - http:
           path: file/{fileId}
           method: delete
+  getUsers:
+    handler: ./handlers/user-handler.getUsers
+    events:
+      - http:
+          path: auth/user/all
+          method: get
+  createUser:
+    handler: ./handlers/user-handler.createUser
+    events:
+      - http:
+          path: auth/user
+          method: post
+  getUserById:
+    handler: ./handlers/user-handler.getUserById
+    events:
+      - http:
+          path: auth/user/{userId}
+          method: get
+  updateUserById:
+    handler: ./handlers/user-handler.updateUserById
+    events:
+      - http:
+          path: auth/user/{userId}
+          method: put
+  deleteUserById:
+    handler: ./handlers/user-handler.deleteUserById
+    events:
+      - http:
+          path: auth/user/{userId}
+          method: delete
 plugins:
   - serverless-offline

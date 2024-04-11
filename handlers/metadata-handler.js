@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Metadata = require('../models/metadata');
 const User = require('../models/user');
 
-const connect = require('../util/database');
+const { connect } = require('../util/database');
 const { response, error } = require('../util/response');
 
 let client = null;
@@ -11,7 +11,7 @@ module.exports.getMetadata = async (event) => {
     let { page, limit } = event.queryStringParameters;
 
     try {
-        await connect();
+        client = await connect();
         const files = await Metadata.find({}, { keywords: 0, __v: 0}).limit(+limit).skip((+page - 1) * +limit);
 
         let count = await Metadata.countDocuments();
