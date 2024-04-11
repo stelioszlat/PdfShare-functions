@@ -9,6 +9,7 @@ provider:
   timeout: 20
   environment:
     MONGO_URI: *****
+    SECRET: alksdjfhasdkfhjaskdhf
 
 functions:
   getMetadata:
@@ -71,5 +72,17 @@ functions:
       - http:
           path: auth/user/{userId}
           method: delete
+  login:
+    handler: ./handlers/auth-handler.login
+    events:
+      - http:
+          path: auth/login
+          method: post
+  register:
+    handler: ./handlers/auth-handler.register
+    events:
+      - http:
+          path: auth/register
+          method: post
 plugins:
   - serverless-offline
