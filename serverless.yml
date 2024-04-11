@@ -1,0 +1,45 @@
+service: pdfshare-serverless
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  stage: dev
+  profile: default
+  region: eu-north-1
+  timeout: 20
+  environment:
+    MONGO_URI: *****
+
+functions:
+  getMetadata:
+    handler: ./handlers/metadata-handler.getMetadata
+    events:
+      - http:
+          path: files
+          method: get
+  addMetadata:
+    handler: ./handlers/metadata-handler.addMetadata
+    events:
+      - http:
+          path: files/new
+          method: post
+  getMetadataByUserId:
+    handler: ./handlers/metadata-handler.getMetadataByUserId
+    events:
+      - http:
+          path: files/user/{userId}
+          method: get
+  getMetadataById:
+    handler: ./handlers/metadata-handler.getMetadataById
+    events:
+      - http:
+          path: file/{fileId}
+          method: get
+  deleteMetadata:
+    handler: ./handlers/metadata-handler.deleteMetadata
+    events: 
+      - http:
+          path: file/{fileId}
+          method: delete
+plugins:
+  - serverless-offline
